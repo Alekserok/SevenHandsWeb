@@ -9,6 +9,25 @@ angular.module('myApp.view2', ['ngRoute'])
   });
 }])
 
-.controller('View2Ctrl', [function() {
+.controller('View2Ctrl', function($scope, $auth) {
 
-}]);
+      $scope.login = function() {
+        $auth.login({ email: $scope.email, password: $scope.password })
+            .then(function() {
+
+              console.log('logged in')
+            })
+            .catch(function(response) {
+              console.log(response.data.message)
+            });
+      };
+      $scope.authenticate = function(provider) {
+        $auth.authenticate(provider)
+            .then(function(response){
+              console.log(response)
+            })
+            .catch(function(response) {
+              console.log(response.data.message)
+            });
+      };
+});

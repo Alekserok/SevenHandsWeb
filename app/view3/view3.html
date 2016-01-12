@@ -1,0 +1,38 @@
+<h3>hello world</h3>
+<form>
+    <div class="form-group">
+        <label for="firstname">First Name</label>
+        <input type="text" class="form-control" id="firstname" placeholder="First Name" ng-model="inputForm.firstname">
+    </div>
+    <div class="form-group">
+        <label for="lastname">Last Name</label>
+        <input type="text" class="form-control" id="lastname" placeholder="Last Name" ng-model="inputForm.lastname">
+    </div>
+    <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" class="form-control" id="email" placeholder="Email" ng-model="inputForm.email">
+    </div>
+
+    <button type="button" class="btn btn-success" ng-click="save(inputForm.firstname, inputForm.lastname, inputForm.email)">Save</button>
+</form>
+
+
+<br />
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Email</th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="(key, value) in items">
+        <td>{{value.firstname}}</td>
+        <td>{{value.lastname}}</td>
+        <td>{{value.email}}</td>
+        <td><a href="" ng-click="save(key, value._rev)">edit</a> | <a href="" ng-click="delete(value._id, value._rev)">delete</a></td>
+    </tr>
+    </tbody>
+</table>

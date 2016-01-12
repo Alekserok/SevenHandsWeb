@@ -1,5 +1,5 @@
-<h3>hello world</h3>
-<form>
+<h3>Add your Task!</h3>
+<form ng-model="inputForm">
     <div class="form-group">
         <label for="firstname">First Name</label>
         <input type="text" class="form-control" id="firstname" placeholder="First Name" ng-model="inputForm.firstname">
@@ -10,14 +10,17 @@
     </div>
     <div class="form-group">
         <label for="email">Email</label>
-        <input type="email" class="form-control" id="email" placeholder="Email" ng-model="inputForm.email">
+        <input type="text" class="form-control" id="email" placeholder="Email" ng-model="inputForm.email">
     </div>
 
-    <button type="button" class="btn btn-success" ng-click="save(inputForm.firstname, inputForm.lastname, inputForm.email)">Save</button>
+    <button type="button" class="btn btn-danger" ng-click="clearForm()">Clear</button>
+    <button type="button" class="btn btn-success" ng-click="save(inputForm)">Save</button>
 </form>
 
 
 <br />
+<h3>Tasks available:</h3>
+<hr>
 <table class="table table-striped">
     <thead>
     <tr>
@@ -32,7 +35,7 @@
         <td>{{value.firstname}}</td>
         <td>{{value.lastname}}</td>
         <td>{{value.email}}</td>
-        <td><a href="" ng-click="save(key, value._rev)">edit</a> | <a href="" ng-click="delete(value._id, value._rev)">delete</a></td>
+        <td><a href="" ng-click="edit(value._id)">edit</a> | <a href="" ng-click="delete(value._id, value._rev)">delete</a></td>
     </tr>
     </tbody>
 </table>

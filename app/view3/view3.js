@@ -14,9 +14,10 @@ angular.module('myApp.view3', ['ngRoute'])
         $pouchDB.sync("https://alekser:12345678@alekser.cloudant.com/nraboy_test");
     })
 
-    .controller("SyncTaskCtrl", function($scope, $rootScope, $pouchDB) {
+    .controller("SyncTaskCtrl", function($scope, $rootScope, $pouchDB, $window) {
 
         $scope.items = {};
+        $scope.inputForm = {};
 
         $pouchDB.startListening();
 
@@ -30,27 +31,34 @@ angular.module('myApp.view3', ['ngRoute'])
             $scope.$apply();
         });
 
-        if($scope.documentId) {
-            $pouchDB.get($scope.documentId).then(function(result) {
+        $scope.edit = function(documentId) {
+            $pouchDB.get(documentId).then(function(result) {
                 $scope.inputForm = result;
+                $scope.$apply();
             });
+            $window.scrollTo(0, 0);
         }
 
-        $scope.save = function(firstname, lastname, email, documentId, documentRevision) {
+        $scope.clearForm = function() {
+            $scope.inputForm = {};
+        }
+
+        $scope.save = function(inputForm) {
             var jsonDocument = {
-                "firstname": firstname,
-                "lastname": lastname,
-                "email": email
+                "firstname": inputForm.firstname,
+                "lastname": inputForm.lastname,
+                "email": inputForm.email
             };
-            if(documentId) {
-                jsonDocument["_id"] = documentId;
-                jsonDocument["_rev"] = documentRevision;
+            if(inputForm._id) {
+                jsonDocument["_id"] = inputForm._id;
+                jsonDocument["_rev"] = inputForm._rev;
             }
             $pouchDB.save(jsonDocument).then(function(response) {
                 //$state.go("list");
             }, function(error) {
                 console.log("ERROR -> " + error);
             });
+            $scope.clearForm();
         }
 
         $scope.delete = function(id, rev) {

@@ -3,10 +3,15 @@
 angular.module('myApp.view3', ['ngRoute'])
 
     .config(['$routeProvider', function ($routeProvider) {
-        $routeProvider.when('/view3', {
+        $routeProvider
+            .when('/view3', {
             templateUrl: 'view3/view3.html',
             controller: 'SyncTaskCtrl'
-        });
+        })
+            .when('/form/:id', {
+                templateUrl: 'view3/form.html',
+                controller: 'SyncTaskCtrl'
+            });
     }])
 
     .run(function($pouchDB) {
@@ -14,7 +19,7 @@ angular.module('myApp.view3', ['ngRoute'])
         $pouchDB.sync("https://alekser:12345678@alekser.cloudant.com/nraboy_test");
     })
 
-    .controller("SyncTaskCtrl", function($scope, $rootScope, $pouchDB, $window) {
+    .controller("SyncTaskCtrl", function($scope, $rootScope, $pouchDB, $window, $routeParams) {
 
         $scope.items = {};
         $scope.inputForm = {};
@@ -31,6 +36,12 @@ angular.module('myApp.view3', ['ngRoute'])
             $scope.$apply();
         });
 
+        if($routeParams.id){
+            $pouchDB.get($routeParams.id).then(function(result) {
+                $scope.inputForm = result;
+                $scope.$apply();
+            });
+        }
         $scope.edit = function(documentId) {
             $pouchDB.get(documentId).then(function(result) {
                 $scope.inputForm = result;

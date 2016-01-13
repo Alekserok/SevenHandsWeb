@@ -20,28 +20,3 @@
     <button type="button" class="btn btn-danger" ng-click="clearForm()">Clear</button>
     <button type="button" class="btn btn-success" ng-click="save(inputForm)">Save</button>
 </form>
-
-
-<br />
-<h3>Tasks available:</h3>
-<hr>
-<table class="table table-striped">
-    <thead>
-    <tr>
-        <th>Name</th>
-        <th>Description</th>
-        <th>Price</th>
-        <th>Date</th>
-        <th></th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr ng-repeat="(key, value) in items">
-        <td>{{value.name}}</td>
-        <td>{{value.description}}</td>
-        <td>{{value.price}}</td>
-        <td>{{value.date}}</td>
-        <td><a href="" ng-click="edit(value._id)">edit</a> | <a href="" ng-click="delete(value._id, value._rev)">delete</a> | <a href="#/form/{{value._id}}">edit2</a> </td>
-    </tr>
-    </tbody>
-</table>

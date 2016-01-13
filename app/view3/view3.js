@@ -44,15 +44,12 @@ angular.module('myApp.view3', ['ngRoute'])
         }
 
         $scope.save = function(inputForm) {
-            var jsonDocument = {
-                "firstname": inputForm.firstname,
-                "lastname": inputForm.lastname,
-                "email": inputForm.email
-            };
-            if(inputForm._id) {
-                jsonDocument["_id"] = inputForm._id;
-                jsonDocument["_rev"] = inputForm._rev;
+            var jsonDocument = {};
+
+            for(var key in inputForm){
+                jsonDocument[key] = inputForm[key];
             }
+
             $pouchDB.save(jsonDocument).then(function(response) {
                 //$state.go("list");
             }, function(error) {

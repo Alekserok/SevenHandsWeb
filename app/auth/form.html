@@ -1,0 +1,18 @@
+<div class="col-sm-4 col-sm-offset-4">
+  <div class="well">
+    <h3>Login or sing in</h3>
+    <div class="form-group">
+      <input type="text" class="form-control" placeholder="Email" ng-model="auth.email" required>
+    </div>
+    <div class="form-group">
+      <input type="password" class="form-control" placeholder="Password" ng-model="auth.password" required>
+    </div>
+    <button class="btn btn-primary" ng-click="login(auth.password, auth.email)">Login existing user</button>
+    <button class="btn btn-primary" ng-click="signUp(auth.password, auth.email)">Sign in new user</button>
+    <br>
+    <br>
+    <br>
+    <button class="btn btn-primary" ng-click="authenticate('linkedin')">Sign in with LinkedIn</button>
+  </div>
+</div>
+

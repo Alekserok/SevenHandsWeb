@@ -1,15 +1,15 @@
 'use strict';
 
-angular.module('myApp.view3', ['ngRoute'])
+angular.module('myApp.tasks', ['ngRoute'])
 
     .config(['$routeProvider', function ($routeProvider) {
         $routeProvider
-            .when('/view3', {
-            templateUrl: 'view3/view3.html',
+            .when('/tasks', {
+            templateUrl: 'tasks/tasks.html',
             controller: 'SyncTaskCtrl'
         })
             .when('/form/:id', {
-                templateUrl: 'view3/form.html',
+                templateUrl: 'tasks/form.html',
                 controller: 'SyncTaskCtrl'
             });
     }])

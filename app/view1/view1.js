@@ -11,12 +11,12 @@ angular.module('myApp.view1', ['ngRoute'])
 
     .controller('TaskCtrl', function ($scope) {
 
-        var db = new PouchDB('todos');
-        var remoteCouch = 'https://alekser:12345678@alekser.cloudant.com';
-        db.changes({
-            since: 'now',
-            live: true
-        }).on('change', showTodos);
+        //var db = new PouchDB('todos');
+        //var remoteCouch = 'https://alekser:12345678@alekser.cloudant.com';
+        //db.changes({
+        //    since: 'now',
+        //    live: true
+        //}).on('change', showTodos);
 
         //function sync() {
         //    syncDom.setAttribute('data-sync-state', 'syncing');

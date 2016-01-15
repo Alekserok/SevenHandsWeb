@@ -16,7 +16,7 @@ angular.module('myApp.tasks', ['ngRoute'])
 
     .run(function($pouchDB) {
         $pouchDB.setDatabase("tasks");
-        $pouchDB.sync("https://alekser:12345678@alekser.cloudant.com/tasks");
+        $pouchDB.sync('http://91.196.196.24:5984/tasks');
     })
 
     .controller("SyncTaskCtrl", function($scope, $rootScope, $pouchDB, $window, $routeParams) {
@@ -25,7 +25,7 @@ angular.module('myApp.tasks', ['ngRoute'])
         $scope.inputForm = {};
 
         $pouchDB.startListening('owner', {owner: 'alex'});
-        //$pouchDB.startListening('status', {status: 'new'});
+        $pouchDB.startListening('status', {status: 'new'});
 
         $rootScope.$on("$pouchDB:change", function(event, data) {
             $scope.items[data.doc._id] = data.doc;

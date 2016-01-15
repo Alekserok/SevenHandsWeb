@@ -12,7 +12,7 @@
     "angular-mocks": "~1.4.0",
     "html5-boilerplate": "~5.2.0",
     "satellizer": "~0.13.3",
-    "pouchdb": "~5.1.0",
+    "pouchdb": "~5.2.0",
     "pouchdb-authentication": "~0.4.2"
   }
 }

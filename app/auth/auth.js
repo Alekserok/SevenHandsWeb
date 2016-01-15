@@ -23,10 +23,22 @@ angular.module('myApp.auth', ['ngRoute', 'satellizer'])
 
     .controller('AuthCtrl', function ($scope, $auth) {
 
-        var db = new PouchDB('https://alekser:12345678@alekser.cloudant.com/_users', {skipSetup: true});
+        var db = new PouchDB('https://alekser:12345678@alekser.cloudant.com/tasks');
 
         $scope.signUp = function (email, password) {
-            db.signup(email, password, function (err, response) {
+            db.put({
+                _id: '_design/owner',
+                filters: {
+                    owner: function (doc, req) {
+                        return doc.owner === req.query.owner;
+                    }.toString()
+                }
+            }).then(function(res){
+                console.log('ok')
+            }).catch(function (err) {
+                console.log(err);
+            })
+            /*db.signup(email, password, function (err, response) {
                 if (err) {
                     if (err.name === 'conflict') {
                         alert('this name is already exists')
@@ -38,7 +50,7 @@ angular.module('myApp.auth', ['ngRoute', 'satellizer'])
                 } else {
                     alert('You successfully singed in. Login now!')
                 }
-            });
+            });*/
         }
 
         $scope.login = function (email, password) {

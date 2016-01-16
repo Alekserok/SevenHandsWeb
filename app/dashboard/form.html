@@ -1,4 +1,4 @@
-<h3>Details</h3>
+<h3>Add your Task!</h3>
 <form ng-model="inputForm">
     <div class="form-group">
         <label for="name">Name</label>
@@ -25,6 +25,6 @@
         <input type="text" class="form-control" id="performer" placeholder="Email" ng-model="inputForm.performer">
     </div>
 
-    <button type="button" class="btn btn-danger" ng-click="go('/tasks')">Go Back</button>
-    <button type="button" class="btn btn-success" ng-click="perform(inputForm._id)">Perform this task!</button>
+    <button type="button" class="btn btn-danger" ng-click="clearForm()">Clear</button>
+    <button type="button" class="btn btn-success" ng-click="save(inputForm)">Save</button>
 </form>

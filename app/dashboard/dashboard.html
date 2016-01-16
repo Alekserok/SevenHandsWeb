@@ -1,6 +1,7 @@
 
-<br />
-<h3>Tasks available:</h3>
+<a href="#dashboard/taken">show taken tasks</a> | <a href="#dashboard">show your tasks</a> |
+<!--<h3>Your tasks:</h3>-->
+<a href="#dashboard/form">create new</a>
 <hr>
 <table class="table table-striped">
     <thead>
@@ -18,7 +19,7 @@
         <td>{{value.description}}</td>
         <td>{{value.price}}</td>
         <td>{{value.date}}</td>
-        <td> <a href="#/tasks/form/{{value._id}}">details</a> </td>
+        <td> <a href="#/dashboard/form/{{value._id}}">edit</a> | <a href="" ng-click="delete(value._id, value._rev)">delete</a> </td>
     </tr>
     </tbody>
 </table>

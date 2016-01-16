@@ -1,16 +1,20 @@
 'use strict';
 
-angular.module('myApp.tasks', ['ngRoute'])
+angular.module('myApp.dashboard', ['ngRoute'])
 
     .config(['$routeProvider', function ($routeProvider) {
         $routeProvider
-            .when('/tasks', {
-            templateUrl: 'tasks/tasks.html',
-            controller: 'SyncTaskCtrl'
-        })
-            .when('/tasks/form/:id', {
-                templateUrl: 'tasks/form.html',
-                controller: 'SyncTaskCtrl'
+            .when('/dashboard', {
+                templateUrl: 'dashboard/dashboard.html',
+                controller: 'DashboardCtrl'
+            })
+            .when('/dashboard/form/:id', {
+                templateUrl: 'dashboard/form.html',
+                controller: 'DashboardCtrl'
+            })
+            .when('/dashboard/:taken', {
+                templateUrl: 'dashboard/dashboard.html',
+                controller: 'DashboardCtrl'
             });
     }])
 
@@ -19,8 +23,9 @@ angular.module('myApp.tasks', ['ngRoute'])
         $pouchDB.sync(couch + '/tasks');
     })
 
-    .controller("SyncTaskCtrl", function($scope, $rootScope, $pouchDB, $window, $routeParams, $http) {
+    .controller("DashboardCtrl", function($scope, $rootScope, $pouchDB, $window, $routeParams, $http, $location) {
 
+        console.log($routeParams.taken);
         $scope.items = {};
         $scope.inputForm = {};
         $scope.user = '';
@@ -30,11 +35,17 @@ angular.module('myApp.tasks', ['ngRoute'])
             url: server + '/user'
         }).then(function successCallback(res) {
             $scope.user = res.data;
+            if($routeParams.taken){
+                $pouchDB.startListening('performer', {performer: $scope.user._id});
+            } else {
+                $pouchDB.startListening('owner', {owner: $scope.user._id});
+            }
+
         }, function errorCallback(res) {
             console.log(res);
         });
 
-        $pouchDB.startListening('status', {status: 'published'});
+
 
         $rootScope.$on("$pouchDB:change", function(event, data) {
             $scope.items[data.doc._id] = data.doc;
@@ -60,15 +71,6 @@ angular.module('myApp.tasks', ['ngRoute'])
             $window.scrollTo(0, 0);
         }
 
-        $scope.perform = function(documentId) {
-            $pouchDB.get(documentId).then(function(result) {
-                result.performer = $scope.user._id;
-                result.status = 'taken';
-                $scope.save(result);
-            });
-            $scope.go('/tasks')
-        }
-
         $scope.clearForm = function() {
             $scope.inputForm = {};
         }
@@ -80,15 +82,20 @@ angular.module('myApp.tasks', ['ngRoute'])
                 jsonDocument[key] = inputForm[key];
             }
 
+            jsonDocument['owner'] = $scope.user._id;
+
             $pouchDB.save(jsonDocument).then(function(response) {
                 //$state.go("list");
             }, function(error) {
                 console.log("ERROR -> " + error);
             });
+            $location.url('/dashboard');
         }
 
         $scope.delete = function(id, rev) {
             $pouchDB.delete(id, rev);
         }
     })
+
+
 
